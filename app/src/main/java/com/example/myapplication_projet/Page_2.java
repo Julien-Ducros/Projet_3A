@@ -1,4 +1,4 @@
-package com.example.projet_progmobile;
+package com.example.myapplication_projet;
 
 import android.os.Bundle;
 
