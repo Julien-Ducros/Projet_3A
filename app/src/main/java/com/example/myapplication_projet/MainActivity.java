@@ -33,21 +33,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_2);
 
-        showlist();
+
         makeApiCall();
     }
 
-    private void showlist() {
+    private void showlist(List<Pokemon> pokemonList) {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        List<String> input = new ArrayList<>();
-        for (int i = 1; i < 20; i++) {
-            input.add("Pokémon :" + i);
-        }// define an adapter
-        mAdapter = new ListAdapter(input);
+
+        mAdapter = new ListAdapter(pokemonList);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -74,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
              public void onResponse(Call<RestPokeApi> call, Response<RestPokeApi> response) {
                  if(response.isSuccessful() && response.body() != null){
                      List<Pokemon> pokemonList = response.body().getResult();
-                     Toast.makeText(getApplicationContext(), "API success", Toast.LENGTH_SHORT).show();
-
+                    showlist(pokemonList);
                  } else {
                      showError();
                  }

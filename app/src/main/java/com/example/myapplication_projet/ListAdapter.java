@@ -8,15 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication_projet.R;
+
 import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
-    private List<String> values;
+    private List<Pokemon> values;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         TextView txtHeader;
         TextView txtFooter;
@@ -32,7 +34,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     }
 
-    public void add(int position, String item) {
+    public void add(int position, Pokemon item) {
         values.add(position, item);
         notifyItemInserted(position);
     }
@@ -43,11 +45,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    ListAdapter(List<String> myDataset) {
+    ListAdapter(List<Pokemon> myDataset) {
         values = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
     public ListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
@@ -66,8 +69,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final String name = values.get(position);
-        holder.txtHeader.setText(name);
+        final Pokemon pokemonActuel = values.get(position);
+        holder.txtHeader.setText(pokemonActuel.getName());
         holder.txtHeader.setOnClickListener(new View.OnClickListener( ) {
             @Override
             public void onClick(View v) {
@@ -75,7 +78,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             }
         });
 
-        holder.txtFooter.setText("Cliquer pour une déscription du " + name);
+        holder.txtFooter.setText(pokemonActuel.getUrl());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -85,3 +88,4 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
 }
+
