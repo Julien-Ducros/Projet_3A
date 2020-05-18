@@ -4,14 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,13 +32,39 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ListAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    private SharedPreferences sharedPreferences;
+    private Gson gson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_2);
 
+        sharedPreferences= getSharedPreferences(Constant.Sauvergarde, Context.MODE_PRIVATE);
+        gson = new GsonBuilder()
+                .setLenient()
+                .create();
 
-        makeApiCall();
+        List<Pokemon> pokemonList = getDataCache();
+
+        if(pokemonList != null) {
+            showlist(pokemonList);
+        } else {
+            makeApiCall();
+        }
+    }
+
+    private List<Pokemon> getDataCache() {
+       String jsonPokemon= sharedPreferences.getString(Constant.Key_Pokemon, null);
+
+       if (jsonPokemon == null){
+           return null;
+       } else {
+           Type ListType = new TypeToken<List<Pokemon>>() {
+           }.getType();
+           return gson.fromJson(jsonPokemon, ListType);
+       }
+
+
     }
 
     private void showlist(List<Pokemon> pokemonList) {
@@ -54,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeApiCall(){
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -71,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
              public void onResponse(Call<RestPokeApi> call, Response<RestPokeApi> response) {
                  if(response.isSuccessful() && response.body() != null){
                      List<Pokemon> pokemonList = response.body().getResult();
+                     memoireList(pokemonList);
                     showlist(pokemonList);
                  } else {
                      showError();
@@ -82,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
                 showError();
              }
          });
+    }
+
+    private void memoireList(List<Pokemon> pokemonList) {
+        String jsonString = gson.toJson(pokemonList);
+        sharedPreferences
+                .edit()
+                .putString(Constant.Key_Pokemon, jsonString)
+                .apply();
+        Toast.makeText(getApplicationContext(), "Saved !", Toast.LENGTH_SHORT).show();
+
     }
 
     private void showError(){
