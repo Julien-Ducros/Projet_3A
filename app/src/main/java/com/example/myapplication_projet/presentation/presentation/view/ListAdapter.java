@@ -1,4 +1,4 @@
-package com.example.myapplication_projet;
+package com.example.myapplication_projet.presentation.presentation.view;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication_projet.R;
+import com.example.myapplication_projet.presentation.presentation.model.Pokemon;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    ListAdapter(List<Pokemon> myDataset) {
+    public ListAdapter(List<Pokemon> myDataset) {
         values = myDataset;
     }
 

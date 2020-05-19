@@ -1,4 +1,4 @@
-package com.example.myapplication_projet;
+package com.example.myapplication_projet.presentation.presentation.view;
 
 import android.os.Bundle;
 

@@ -1,4 +1,4 @@
-package com.example.myapplication_projet;
+package com.example.myapplication_projet.presentation.presentation.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,12 +11,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.myapplication_projet.Constant;
+import com.example.myapplication_projet.data.PokeApi;
+import com.example.myapplication_projet.R;
+import com.example.myapplication_projet.presentation.presentation.model.Pokemon;
+import com.example.myapplication_projet.presentation.presentation.model.RestPokeApi;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

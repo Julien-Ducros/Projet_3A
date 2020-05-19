@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".presentation.presentation.view.MainActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -23,11 +23,11 @@
                 android:id="@+id/button1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enter"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:onClick="page_1"
-                />
+                android:text="@string/enter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
@@ -36,7 +36,7 @@
         android:id="@+id/NameAppli"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pokédex"
+        android:text="@string/pok_dex"
         android:textColor="#CF1111"
         android:textSize="50sp"
         android:textStyle="bold"
@@ -44,6 +44,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
